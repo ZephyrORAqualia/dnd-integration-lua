@@ -72,13 +72,12 @@ baseUrl = "https://dnd-backend-main.herokuapp.com/api"
 
 function sendSpellRequest(player, value)
     str = toTitleCase(value)
-    str = string.gsub(str, "%s+", "")
     if value ~= "" then
       WebRequest.get(baseUrl .. "/get/spell?name=" .. str .. "&page&limit", function(responce)
           local json = JSON.decode(responce.text)
           local result = json.result[1]
 
-          printToAll("\n--" .. player.steam_name .. " Requested spell " .. str .. "--", Color(0.0, 0.5, 0.0))
+          printToAll("\n--" .. player.steam_name .. " Requested spell " .. str .. "--", player.color)
           printToAll("Name: " .. result.name)
           printToAll("Level: " .. result.level)
 
@@ -99,33 +98,39 @@ function sendSpellRequest(player, value)
               printToAll("Saving Throws: " .. v)
             end
           end
-
           if result.entries ~= nil then
             for i, v in ipairs(result.entries) do
               if pcall(result.entries.type ~= nil) then
 
               else
-                printToAll(v)
+                  if v.type ~= nil then
+                    if v.type ~= "table" then
+                      for i, a in ipairs(v.entries) do
+                          print(a)
+                      end
+                    end
+                  else
+                    print(v)
+                  end
               end
             end
           end
 
-          printToAll("--" .. player.steam_name .. " Requested spell " .. str .. "--", Color(0.0, 0.5,0.0))
+          printToAll("--" .. player.steam_name .. " Requested spell " .. str .. "--", player.color)
         end)
     end
-    UI.setAttribute("spellQuery", "text", "") --Put at bottom of function
+    UI.setAttribute("spellQuery" .. player.color, "text", "") --Put at bottom of function
 end
 
 function sendFeatRequest(player, value)
     str = toTitleCase(value)
-    str = string.gsub(str, "%s+", "")
 
     if value ~= "" then
       WebRequest.get(baseUrl .. "/get/feat?name=" .. str .. "&page&limit", function(responce)
           local json = JSON.decode(responce.text)
           local result = json.result[1]
 
-          printToAll("\n--" .. player.steam_name .. " Requested feat " .. str .. "--", Color(0.5, 0.2, 0.5))
+          printToAll("\n--" .. player.steam_name .. " Requested feat " .. str .. "--", player.color)
           printToAll("Name: " .. result.name)
 
           printToAll("Description: " .. result.descriptions.description)
@@ -134,11 +139,11 @@ function sendFeatRequest(player, value)
             printToAll(v)
           end
 
-          printToAll("--" .. player.steam_name .. " Requested feat " .. str .. "--", Color(0.5, 0.2, 0.5))
+          printToAll("--" .. player.steam_name .. " Requested feat " .. str .. "--", player.color)
       end)
     end
 
-  UI.setAttribute("featQuery", "text", "") --Put at bottom of function
+  UI.setAttribute("featQuery" .. player.color, "text", "") --Put at bottom of function
 end
 
 function sendPsionicRequest(player, value)
@@ -149,7 +154,7 @@ function sendPsionicRequest(player, value)
       local json = JSON.decode(responce.text)
       local result = json.result[1]
 
-      printToAll("\n--" .. player.steam_name .. " Requested psionic " .. str .. "--", Color(0.5, 0.2, 0.5))
+      printToAll("\n--" .. player.steam_name .. " Requested psionic " .. str .. "--", player.color)
 
       printToAll("Name: " .. result.name)
       printToAll("Type: " .. result.type)
@@ -165,11 +170,23 @@ function sendPsionicRequest(player, value)
 
             for i, v in ipairs(result.modes) do
               printToAll("==")
-              printToAll("Name: " .. v.name)
-              printToAll("Min: " .. v.cost.min .. "\nMax: " .. v.cost.max)
-              for q, c in ipairs(v.entries) do
-                printToAll(c)
+              if v.submodes == nil then
+                printToAll("Name: " .. v.name)
+                printToAll("Min: " .. v.cost.min .. "\nMax: " .. v.cost.max)
+                for q, c in ipairs(v.entries) do
+                  printToAll(c)
+                end
+              else
+                  for i, f in ipairs(v.submodes) do
+                      printToAll("==")
+                      printToAll("Name: " .. f.name)
+                      printToAll("Min: " .. f.cost.min .. "\nMax: " .. f.cost.max)
+                      for q, c in ipairs(f.entries) do
+                        printToAll(c)
+                      end
+                  end
               end
+
             end
             printToAll("==Modes==")
       else
@@ -181,12 +198,12 @@ function sendPsionicRequest(player, value)
       result = ""
       json = ""
 
-      printToAll("--" .. player.steam_name .. " Requested psionic " .. str .. "--", Color(0.5, 0.2, 0.5))
+      printToAll("--" .. player.steam_name .. " Requested psionic " .. str .. "--", player.color)
     end)
   end
 
 
-  UI.setAttribute("psionicQuery", "text", "") --Put at bottom of function
+  UI.setAttribute("psionicQuery" .. player.color, "text", "") --Put at bottom of function
 end
 
 function toTitleCase(phrase)
