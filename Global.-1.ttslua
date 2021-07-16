@@ -1,0 +1,199 @@
+--[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
+
+--[[ The onLoad event is called after the game save finishes loading. --]]
+function onLoad()
+
+end
+
+--[[ The onUpdate event is called once per frame. --]]
+function onUpdate()
+    --[[ print('onUpdate loop!') --]]
+end
+
+rollerToggle = true
+spellToggle = true
+featToggle = true
+psionicToggle = true
+
+function toggleSpellButtons(player, value, id)
+    if rollerToggle then
+        --UI.show("rollerButtons")
+        UI.setAttribute("rollerButtons" .. player.color, "active", true)
+        UI.setAttribute("rollerLayout" .. player.color , "height", 280)
+    else
+        --UI.hide("rollerButtons")
+        UI.setAttribute("rollerButtons" .. player.color, "active", false)
+        UI.setAttribute("spellButton"  .. player.color, "active", false)
+        UI.setAttribute("featButton"  .. player.color, "active", false)
+        UI.setAttribute("psionicButton" .. player.color, "active", false)
+        UI.setAttribute("rollerLayout" .. player.color, "height", 40)
+    end
+    --This flips between true/false for show/hide
+    rollerToggle = not rollerToggle
+end
+
+function toggleSpellQuery(player, value, id)
+  if spellToggle then
+      --UI.show("rollerButtons")
+      UI.setAttribute("spellButton"  .. player.color, "active", true)
+  else
+      --UI.hide("rollerButtons")
+      UI.setAttribute("spellButton"  .. player.color, "active", false)
+  end
+  --This flips between true/false for show/hide
+  spellToggle = not spellToggle
+end
+
+function toggleFeatQuery(player, value, id)
+  if featToggle then
+      --UI.show("rollerButtons")
+      UI.setAttribute("featButton"  .. player.color, "active", true)
+  else
+      --UI.hide("rollerButtons")
+      UI.setAttribute("featButton"  .. player.color, "active", false)
+  end
+  --This flips between true/false for show/hide
+  featToggle = not featToggle
+end
+
+function togglePsionicQuery(player, value, id)
+  if psionicToggle then
+      --UI.show("rollerButtons")
+      UI.setAttribute("psionicButton" .. player.color, "active", true)
+  else
+      --UI.hide("rollerButtons")
+      UI.setAttribute("psionicButton" .. player.color, "active", false)
+  end
+  --This flips between true/false for show/hide
+  psionicToggle = not psionicToggle
+end
+
+baseUrl = "https://dnd-backend-main.herokuapp.com/api"
+
+function sendSpellRequest(player, value)
+    str = toTitleCase(value)
+    str = string.gsub(str, "%s+", "")
+    if value ~= "" then
+      WebRequest.get(baseUrl .. "/get/spell?name=" .. str .. "&page&limit", function(responce)
+          local json = JSON.decode(responce.text)
+          local result = json.result[1]
+
+          printToAll("\n--" .. player.steam_name .. " Requested spell " .. str .. "--", Color(0.0, 0.5, 0.0))
+          printToAll("Name: " .. result.name)
+          printToAll("Level: " .. result.level)
+
+          if result.damageInflict ~= nil then
+            for i, v in ipairs(result.damageInflict) do
+              printToAll("Damage Type: " .. v)
+            end
+          end
+
+          if result.conditionInflict ~= nil then
+            for i, v in ipairs(result.conditionInflict) do
+              printToAll("Conditons Inflicted: " .. v)
+            end
+          end
+
+          if result.savingThrow ~= nil then
+            for i, v in ipairs(result.savingThrow) do
+              printToAll("Saving Throws: " .. v)
+            end
+          end
+
+          if result.entries ~= nil then
+            for i, v in ipairs(result.entries) do
+              if pcall(result.entries.type ~= nil) then
+
+              else
+                printToAll(v)
+              end
+            end
+          end
+
+          printToAll("--" .. player.steam_name .. " Requested spell " .. str .. "--", Color(0.0, 0.5,0.0))
+        end)
+    end
+    UI.setAttribute("spellQuery", "text", "") --Put at bottom of function
+end
+
+function sendFeatRequest(player, value)
+    str = toTitleCase(value)
+    str = string.gsub(str, "%s+", "")
+
+    if value ~= "" then
+      WebRequest.get(baseUrl .. "/get/feat?name=" .. str .. "&page&limit", function(responce)
+          local json = JSON.decode(responce.text)
+          local result = json.result[1]
+
+          printToAll("\n--" .. player.steam_name .. " Requested feat " .. str .. "--", Color(0.5, 0.2, 0.5))
+          printToAll("Name: " .. result.name)
+
+          printToAll("Description: " .. result.descriptions.description)
+
+          for i, v in ipairs(result.descriptions.trait) do
+            printToAll(v)
+          end
+
+          printToAll("--" .. player.steam_name .. " Requested feat " .. str .. "--", Color(0.5, 0.2, 0.5))
+      end)
+    end
+
+  UI.setAttribute("featQuery", "text", "") --Put at bottom of function
+end
+
+function sendPsionicRequest(player, value)
+  str = toTitleCase(value)
+
+  if value ~= "" then
+    WebRequest.get(baseUrl .. "/get/psionic?name=" .. str .. "&page&limit", function(responce)
+      local json = JSON.decode(responce.text)
+      local result = json.result[1]
+
+      printToAll("\n--" .. player.steam_name .. " Requested psionic " .. str .. "--", Color(0.5, 0.2, 0.5))
+
+      printToAll("Name: " .. result.name)
+      printToAll("Type: " .. result.type)
+
+      if result.type == "Discipline" then
+            printToAll("Focus: " .. result.focus)
+
+            for i, v in ipairs(result.entries) do
+                printToAll(v)
+            end
+
+            printToAll("==Modes==")
+
+            for i, v in ipairs(result.modes) do
+              printToAll("==")
+              printToAll("Name: " .. v.name)
+              printToAll("Min: " .. v.cost.min .. "\nMax: " .. v.cost.max)
+              for q, c in ipairs(v.entries) do
+                printToAll(c)
+              end
+            end
+            printToAll("==Modes==")
+      else
+        for i, v in ipairs(result.entries) do
+            printToAll(v)
+        end
+      end
+
+      result = ""
+      json = ""
+
+      printToAll("--" .. player.steam_name .. " Requested psionic " .. str .. "--", Color(0.5, 0.2, 0.5))
+    end)
+  end
+
+
+  UI.setAttribute("psionicQuery", "text", "") --Put at bottom of function
+end
+
+function toTitleCase(phrase)
+    local result = string.gsub( phrase, "(%a)([%w_']*)",
+        function(first, rest)
+            return first:upper() .. rest:lower()
+        end
+    )
+    return result
+end
