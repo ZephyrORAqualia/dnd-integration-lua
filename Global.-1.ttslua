@@ -1,3 +1,17 @@
+--[[ Lua code. See documentation: http://berserk-games.com/knowledgebase/scripting/ --]]
+
+--[[ The onLoad event is called after the game save finishes loading. --]]
+function onLoad()
+    --[[ print('onLoad!') --]]
+end
+
+
+--[[ The onUpdate event is called once per frame. --]]
+function onUpdate ()
+    --[[ print('onUpdate loop!') --]]
+
+end
+
 --[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
 
 --[[ The onLoad event is called after the game save finishes loading. --]]
@@ -106,11 +120,11 @@ function sendSpellRequest(player, value)
                   if v.type ~= nil then
                     if v.type ~= "table" then
                       for i, a in ipairs(v.entries) do
-                          print(a)
+                        printToAll(a)
                       end
                     end
                   else
-                    print(v)
+                    printToAll(v)
                   end
               end
             end
