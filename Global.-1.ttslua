@@ -1,17 +1,3 @@
---[[ Lua code. See documentation: http://berserk-games.com/knowledgebase/scripting/ --]]
-
---[[ The onLoad event is called after the game save finishes loading. --]]
-function onLoad()
-    --[[ print('onLoad!') --]]
-end
-
-
---[[ The onUpdate event is called once per frame. --]]
-function onUpdate ()
-    --[[ print('onUpdate loop!') --]]
-
-end
-
 --[[ Lua code. See documentation: https://api.tabletopsimulator.com/ --]]
 
 --[[ The onLoad event is called after the game save finishes loading. --]]
@@ -92,39 +78,51 @@ function sendSpellRequest(player, value)
           local result = json.result[1]
 
           printToAll("\n--" .. player.steam_name .. " Requested spell " .. str .. "--", player.color)
-          printToAll("Name: " .. result.name)
-          printToAll("Level: " .. result.level)
+          printToAll("Name: " .. result.name) --display spell name
+          printToAll("Level: " .. result.level) -- display spell level
 
-          if result.damageInflict ~= nil then
+          if result.range[1].distance.type == "touch" then
+            printToAll("Range: " .. result.range[1].distance.type) -- display spell range
+          else
+            printToAll("Range: " .. result.range[1].distance.amount .. " " .. result.range[1].distance.type) -- display spell range
+          end
+
+          if result.duration[1].type == "instant" then
+            printToAll("Duration: " .. result.duration[1].type)
+          else
+            printToAll("Duration: " .. result.duration[1].duration.amount .. " " .. result.duration[1].duration.type)
+          end
+
+          if result.damageInflict ~= nil then --check if the responce from the server contains a damageInflict value
             for i, v in ipairs(result.damageInflict) do
-              printToAll("Damage Type: " .. v)
+              printToAll("Damage Type: " .. v) -- display all damage types
             end
           end
 
-          if result.conditionInflict ~= nil then
+          if result.conditionInflict ~= nil then --check if the responce from the server contains a conditionInflict value
             for i, v in ipairs(result.conditionInflict) do
-              printToAll("Conditons Inflicted: " .. v)
+              printToAll("Conditons Inflicted: " .. v) -- display all conditions Inflicted
             end
           end
 
-          if result.savingThrow ~= nil then
+          if result.savingThrow ~= nil then --check if the responce from the server contains a savingThrow value
             for i, v in ipairs(result.savingThrow) do
-              printToAll("Saving Throws: " .. v)
+              printToAll("Saving Throws: " .. v) -- display all saving throws
             end
           end
-          if result.entries ~= nil then
-            for i, v in ipairs(result.entries) do
+          if result.entries ~= nil then --check if the responce from the server contains a entries value
+            for i, v in ipairs(result.entries) do -- loop through the entries and if they have a pointless info in them skip it (mainly quotes from custom spells)
               if pcall(result.entries.type ~= nil) then
 
               else
-                  if v.type ~= nil then
-                    if v.type ~= "table" then
-                      for i, a in ipairs(v.entries) do
-                        printToAll(a)
+                  if v.type ~= nil then -- if the entries has a special formatter go below
+                    if v.type ~= "table" then -- if the entries has the formatter table
+                      for i, a in ipairs(v.entries) do -- loop through all the table entries
+                          printToAll(a)
                       end
                     end
                   else
-                    printToAll(v)
+                    printToAll(v) --else just print all the info
                   end
               end
             end
@@ -137,19 +135,19 @@ function sendSpellRequest(player, value)
 end
 
 function sendFeatRequest(player, value)
-    str = toTitleCase(value)
+    str = toTitleCase(value) -- normalise the input
 
-    if value ~= "" then
+    if value ~= "" then -- if input isnt null
       WebRequest.get(baseUrl .. "/get/feat?name=" .. str .. "&page&limit", function(responce)
-          local json = JSON.decode(responce.text)
-          local result = json.result[1]
+          local json = JSON.decode(responce.text)--decode responce
+          local result = json.result[1] -- make my life easier when referencing data
 
           printToAll("\n--" .. player.steam_name .. " Requested feat " .. str .. "--", player.color)
-          printToAll("Name: " .. result.name)
+          printToAll("Name: " .. result.name) -- get feat name
 
-          printToAll("Description: " .. result.descriptions.description)
+          printToAll("Description: " .. result.descriptions.description) -- get the description
 
-          for i, v in ipairs(result.descriptions.trait) do
+          for i, v in ipairs(result.descriptions.trait) do -- loop through all entries and print
             printToAll(v)
           end
 
@@ -170,13 +168,13 @@ function sendPsionicRequest(player, value)
 
       printToAll("\n--" .. player.steam_name .. " Requested psionic " .. str .. "--", player.color)
 
-      printToAll("Name: " .. result.name)
-      printToAll("Type: " .. result.type)
+      printToAll("Name: " .. result.name) -- display name
+      printToAll("Type: " .. result.type) -- display type (Disipline / Talent)
 
-      if result.type == "Discipline" then
-            printToAll("Focus: " .. result.focus)
+      if result.type == "Discipline" then -- if type disipline add more info to output
+            printToAll("Focus: " .. result.focus) --display focus
 
-            for i, v in ipairs(result.entries) do
+            for i, v in ipairs(result.entries) do -- loop through entries
                 printToAll(v)
             end
 
@@ -220,7 +218,7 @@ function sendPsionicRequest(player, value)
   UI.setAttribute("psionicQuery" .. player.color, "text", "") --Put at bottom of function
 end
 
-function toTitleCase(phrase)
+function toTitleCase(phrase) -- used to normalise all the data ( proberally used lower case entries but here we are)
     local result = string.gsub( phrase, "(%a)([%w_']*)",
         function(first, rest)
             return first:upper() .. rest:lower()
