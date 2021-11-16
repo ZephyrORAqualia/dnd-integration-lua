@@ -349,3 +349,339 @@
 
     </VerticalLayout>
 </VerticalLayout>
+
+<VerticalLayout
+    id="rollerLayoutWhite"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="White"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsWhite"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonWhite"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryWhite"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonWhite"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryWhite"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonWhite"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryWhite"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
+
+<VerticalLayout
+    id="rollerLayoutBrown"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="Brown"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsBrown"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonBrown"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryBrown"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonBrown"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryBrown"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonBrown"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryBrown"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
+
+    <VerticalLayout
+    id="rollerLayoutYellow"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="Yellow"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsYellow"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonYellow"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryYellow"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonYellow"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryYellow"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonYellow"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryYellow"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
+
+    <VerticalLayout
+    id="rollerLayoutGreen"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="Green"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsGreen"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonGreen"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryGreen"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonGreen"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryGreen"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonGreen"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryGreen"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
+
+    <VerticalLayout
+    id="rollerLayoutTeal"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="Teal"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsTeal"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonTeal"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryTeal"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonTeal"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryTeal"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonTeal"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryTeal"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
+
+    <VerticalLayout
+    id="rollerLayoutPink"
+    height="40"
+    width="80"
+    allowDragging="true"
+    returnToOriginalPositionWhenReleased="false"
+    rectAlignment="UpperLeft"
+    offsetXY="10 -550"
+    visibility="Pink"
+    >
+    <Button
+        onClick="toggleSpellButtons"
+        text="Search"
+        >
+    </Button>
+    <VerticalLayout
+        id="rollerButtonsPink"
+        height="240"
+        width="80"
+        active="false"
+        >
+        <Button text="Spell"  id="Spell"  class="roller" onClick="toggleSpellQuery"></Button>
+        <VerticalLayout
+            id="spellButtonPink"
+            height="240"
+            padding="0 0 1 1"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="spellQueryPink"  class="roller" onEndEdit="sendSpellRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Feat"  id="Feat"  class="roller" onClick="toggleFeatQuery"></Button>
+        <VerticalLayout
+            id="featButtonPink"
+            padding="0 0 1 1"
+            height="240"
+            width="80"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="featQueryPink"  class="roller" onEndEdit="sendFeatRequest"></InputField>
+        </VerticalLayout>
+
+        <Button text="Psionic"  id="Psionic"  class="roller" onClick="togglePsionicQuery"></Button>
+        <VerticalLayout
+            id="psionicButtonPink"
+            height="240"
+            width="80"
+            padding="0 0 1 1"
+            active="false"
+        >
+            <InputField placeholder="Query"  id="psionicQueryPink"  class="roller" onEndEdit="sendPsionicRequest"></InputField>
+        </VerticalLayout>
+    </VerticalLayout>
+</VerticalLayout>
