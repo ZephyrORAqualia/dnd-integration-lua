@@ -68,7 +68,7 @@ function togglePsionicQuery(player, value, id)
   psionicToggle = not psionicToggle
 end
 
-baseUrl = "https://dnd-backend-main.herokuapp.com/api"
+baseUrl = "https://dnd-backend.onrender.com/api"
 
 function sendSpellRequest(player, value)
     str = toTitleCase(value)
